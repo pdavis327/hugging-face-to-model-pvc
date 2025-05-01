@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: download
+spec:
+  ttlSecondsAfterFinished: 60
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: download
+        image: registry.access.redhat.com/ubi9/python-311
+        command: ["/bin/bash"]
+        args:
+          - /app/download_file.sh
+        volumeMounts:
+          - name: download
+            mountPath: /app
+          - name: models
+            mountPath: /models
+        env:
+          - name: HF_TOKEN
+            value: {{ .Values.hf_token }}
+          - name: MODEL
+            value: {{ .Values.model }}
+          - name: MODEL_NAME
+            value: {{ .Values.model_name }}
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc_name }}
+        - name: download
+          configMap:
+            name: download-configmap
+            defaultMode: 493

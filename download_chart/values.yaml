@@ -1,0 +1,4 @@
+model: RedHatAI/Meta-Llama-3.1-8B-FP8
+model_name: llama-3.1-8b
+hf_token: ''
+pvc_name: 'model-pvc'

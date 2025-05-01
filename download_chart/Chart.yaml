@@ -1,0 +1,4 @@
+apiVersion: v2
+name: llm-download
+version: 1.0.0
+description: Template for downloading a model from Hugging face and putting it into a PVC that can be used by vLLM in KServe
