@@ -9,7 +9,7 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: download
+      - name: download-{{ .Release.Name }}
         image: registry.access.redhat.com/ubi9/python-311
         command: ["/bin/bash"]
         args:
@@ -32,5 +32,5 @@ spec:
             claimName: {{ .Values.pvc_name }}
         - name: download
           configMap:
-            name: download-configmap
+            name: download-configmap-{{ .Release.Name }}
             defaultMode: 493
